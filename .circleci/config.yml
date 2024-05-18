@@ -26,9 +26,9 @@ jobs:
           name: terratest
           command: |
             cd terratest/test \
-              && go mod init tftest \
+              && go mod init test \
               && go mod tidy \
-              && go test -v -timeout 4m -run TestTerragrunt
+              && go test -v -timeout 20m
 workflows:
   analyze-tf-code:
     jobs:
