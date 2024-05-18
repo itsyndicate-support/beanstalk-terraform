@@ -15,6 +15,7 @@ resource "aws_instance" "db" {
   tags = {
     Name = each.key
   }
+  associate_public_ip_address = true
   metadata_options {
     http_tokens = "required"
   }
