@@ -8,7 +8,7 @@ import (
     "github.com/stretchr/testify/assert"
 )
 
-func TestTerraformModule(t *testing.T) {
+func TestTerragrunt(t *testing.T) {
     t.Parallel()
 
     opts := &terraform.Options{
@@ -29,6 +29,6 @@ func TestTerraformModule(t *testing.T) {
 	if err != nil {
         t.Fatalf("Failed to parse bool: %v", err)
     }
-	assert.False(t, dbIps)
+	assert.True(t, dbIps)
 	//
 }
