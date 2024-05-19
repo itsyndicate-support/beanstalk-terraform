@@ -4,11 +4,11 @@
 #tfsec:ignore:aws-vpc-no-public-ingress-sg
 #tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "administration" {
-  name        = "administration"
+  name        = "${var.environment_name}-administration"
   description = "Allow default administration service"
   vpc_id      = aws_vpc.terraform.id
   tags = {
-    Name = "administration"
+    Name = "${var.environment_name}-administration"
   }
 
   # Open ssh port
@@ -43,11 +43,11 @@ resource "aws_security_group" "administration" {
 #tfsec:ignore:aws-vpc-no-public-ingress-sg
 #tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "web" {
-  name        = "web"
+  name        = "${var.environment_name}-web"
   description = "Allow web incgress trafic"
   vpc_id      = aws_vpc.terraform.id
   tags = {
-    Name = "web"
+    Name = "${var.environment_name}-web"
   }
 
   # http port
@@ -82,11 +82,11 @@ resource "aws_security_group" "web" {
 #tfsec:ignore:aws-vpc-no-public-ingress-sg
 #tfsec:ignore:aws-vpc-no-public-egress-sg
 resource "aws_security_group" "db" {
-  name        = "db"
+  name        = "${var.environment_name}-db"
   description = "Allow db incgress trafic"
   vpc_id      = aws_vpc.terraform.id
   tags = {
-    Name = "db"
+    Name = "${var.environment_name}-db"
   }
 
   # db port
