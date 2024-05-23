@@ -34,7 +34,7 @@ jobs:
       name: go/default
       tag: '1.19.2'
     environment:
-      customization_path: kubernetes/kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster
+      customization_path: kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster
       app_path: kubernetes/fluxcd/repositories/infra-repo/apps
     steps:
       - checkout
