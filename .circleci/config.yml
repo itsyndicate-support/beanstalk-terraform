@@ -1,5 +1,18 @@
 version: 2.1
 jobs:
+  security_test:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
+          name: Install tfsec
+          command: |
+            curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+      - checkout
+      - run:
+          name: Use tfsec to test Terraform for vulnerabilities
+          command: |
+            tfsec ./infrastructure/
   build:
     docker:
       - image: alpine:3.15
@@ -9,3 +22,11 @@ jobs:
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
+
+workflows:
+  test-workflow:
+    jobs:
+      - build
+      - security_test:
+          requires:
+            - build
