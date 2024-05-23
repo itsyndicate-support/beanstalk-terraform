@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/fluxcd/repositories/infra-repo/apps/{{ envname }}
+  path: ./kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH
   prune: true
   wait: true
   timeout: 5m0s

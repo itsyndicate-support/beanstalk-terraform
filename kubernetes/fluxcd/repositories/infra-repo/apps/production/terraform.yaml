@@ -13,6 +13,13 @@ spec:
     kind: GitRepository
     name: prod
   approvePlan: auto
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket = "week10flux"
+        key = "production/terraform.tfstate"
+        region = "us-east-1"
+      }
   runnerPodTemplate:
     spec:
       envFrom:
