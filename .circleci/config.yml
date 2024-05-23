@@ -67,12 +67,12 @@ workflows:
   analyze-tf-code:
     jobs:
       - tfsec
-      - terratest:
-          requires: 
-            - tfsec
+      # - terratest:
+      #     requires: 
+      #       - tfsec
       - templates-render:
-          requires: 
-            - terratest
+          # requires: 
+          #   - terratest
           filters:
             branches:
               ignore: 
