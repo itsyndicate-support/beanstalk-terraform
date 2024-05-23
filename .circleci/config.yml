@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Use tfsec to test Terraform for vulnerabilities
           command: |
-            tfsec --severity CRITICAL ./infrastructure/
+            tfsec ./infrastructure/ -m CRITICAL
   build:
     docker:
       - image: alpine:3.15
