@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: test
+  namespace: flux-system
+spec:
+  interval: 30s
+  url: https://github.com/denis-dovgodko/webserver-ec2-module-terraform
+  ref:
+    branch: test
+  secretRef:
+    name: flux-system

@@ -1,0 +1,27 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: test
+  namespace: flux-system
+spec:
+  vars:
+  - name: environment_name
+    value: test
+  interval: 2m
+  path: ./infrastructure
+  sourceRef:
+    kind: GitRepository
+    name: test
+  approvePlan: auto
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket = "week10flux"
+        key = "test/terraform.tfstate"
+        region = "us-east-1"
+      }
+  runnerPodTemplate:
+    spec:
+      envFrom:
+        - secretRef:
+            name: aws-credentials
