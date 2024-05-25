@@ -7,7 +7,7 @@ spec:
   vars:
   - name: environment_name
     value: $CIRCLE_BRANCH
-  interval: 2m
+  interval: 1m
   path: ./infrastructure
   sourceRef:
     kind: GitRepository
