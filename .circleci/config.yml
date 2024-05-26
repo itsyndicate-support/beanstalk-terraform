@@ -12,7 +12,7 @@ jobs:
           directory: ./infrastructure
           exclude-checks: GEN001,GCP001,GCP002,'mock,aws-ec2-no-public-egress-sgr,aws-ec2-no-public-ingress-sgr,aws-ec2-require-vpc-flow-logs-for-all-vpcs,aws-ec2-enable-at-rest-encryption,aws-ec2-enforce-http-token-imds'
   terratest:
-    resource_class: tfx4m8aye8g2nip3zxn6k/runner
+    resource_class: tfx4m8aye8g2nip3zxn6k/self-runner
     executor:
       name: go/default
       tag: '1.19.2'
@@ -32,7 +32,7 @@ jobs:
               && go mod tidy \
               && go test -v -timeout 20m
   templates-render:
-    resource_class: tfx4m8aye8g2nip3zxn6k/runner
+    resource_class: tfx4m8aye8g2nip3zxn6k/self-runner
     executor:
       name: go/default
       tag: '1.19.2'

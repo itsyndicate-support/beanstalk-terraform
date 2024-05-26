@@ -29,12 +29,13 @@ You can use next cheatsheet:
 
 ```kind create cluster --name fluxcd --image kindest/node:v1.25.16```
 
-```flux bootstrap github   
-    --token-auth   
-    --owner=username   
-    --repository=webserver-ec2-module-terraform   
-    --branch=main   
-    --path=kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster   
+```
+flux bootstrap github   `
+    --token-auth   `
+    --owner=username   `
+    --repository=webserver-ec2-module-terraform   `
+    --branch=main   `
+    --path=kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster   `
     --personal
 ```
 
