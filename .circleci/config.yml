@@ -70,10 +70,12 @@ jobs:
 workflows:
   just-test:
     when:
-      and:
+      or:
         - not: 
             # Skipping all [create pr] commits so that testing jobs don't trigger twice
             matches: {pattern: "\\[create pr\\]", value: << pipeline.trigger_parameters.github_app.commit_message >>}
+        # Matching main branch with or statement so that "[create pr] ... " commit on main branch still triggers tests
+        - equal: [main, << pipeline.git.branch >>]
     jobs:
       - security_test
       - terratest:
