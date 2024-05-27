@@ -13,7 +13,7 @@ jobs:
           exclude-checks: 'aws-ec2-require-vpc-flow-logs-for-all-vpcs,aws-ec2-enable-at-rest-encryption,aws-ec2-enforce-http-token-imds,aws-ec2-no-public-egress-sgr,aws-ec2-no-public-ingress-sgr,aws-ec2-add-description-to-security-group-rule'
 
   post-test:
-    resource_class: nkudshvhbsq9xnrv7dx9nk/deploymentest
+    resource_class: nkudshvhbsq9xnrv7dx9nk/deployment
     executor:
       name: go/default
       tag: '1.19.2'
