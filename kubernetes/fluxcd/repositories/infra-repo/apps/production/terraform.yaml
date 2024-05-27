@@ -16,7 +16,7 @@ spec:
   backendConfig:
     customConfiguration: |
       backend "s3" {
-        bucket = "django-sample-bucket"
+        bucket = "states-bucket-512"
         key = "production/terraform.tfstate"
         region = "us-east-1"
       }
