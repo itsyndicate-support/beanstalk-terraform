@@ -2,6 +2,35 @@ terraform {
     source = "../../../infrastructure"
 }
 
+generate "outputs_for_tests" {
+    path = "${get_terragrunt_dir()}/../../../infrastructure/110-test-outputs.tf"
+    if_exists = "overwrite"
+    contents = <<EOF
+output "http_instances_state" {
+    value = alltrue([
+        for instance in aws_instance.http :
+            instance.instance_state == "running" ? true : false
+    ])
+}
+
+output "db_instances_state" {
+    value = alltrue([
+        for instance in aws_instance.db :
+            instance.instance_state == "running" ? true : false
+    ])
+}
+
+# Must be false
+output "db_public_access" {
+    value = anytrue([
+        for db in aws_instance.db :
+            db.associate_public_ip_address
+    ])
+}
+EOF
+}
+
+
 inputs = {
     vpc_cidr = "200.100.0.0/16"
     network_http = {
