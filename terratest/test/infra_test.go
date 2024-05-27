@@ -1,6 +1,7 @@
 package infra_test
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 
@@ -15,28 +16,6 @@ func GetFirstThreeOctets(fullIp string) string {
 
 func TestInfra(t *testing.T) {
 
-	// awsRegion := "eu-north-1"
-
-	// Expected network values
-	// expectedVpcCidr := "200.100.0.0/16"
-	// expectedHttpSubnetCidr := "200.100.1.0/24"
-	// expectedDbSubnetCidr := "200.100.2.0/24"
-
-	// // Expected EC2 values
-	// expectedInstanceType := "t3.micro"
-	// expectedInstanceNames := []string{
-	// 	"test-instance-http-1",
-	// 	"test-instance-http-2",
-	// }
-
-	// Expected DB values
-	// expectedDbInstanceType := "t3.micro"
-	// expectedDbInstanceNames := []string{
-	// 	"test-instance-db-1",
-	// 	"test-instance-db-2",
-	// 	"test-instance-db-3",
-	// }
-
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir:    "../terragrunt/infra-module",
 		TerraformBinary: "terragrunt",
@@ -48,13 +27,31 @@ func TestInfra(t *testing.T) {
 
 	// Extracting test data from terragrunt apply
 	instanceData := terraform.OutputMap(t, terraformOptions, "http_ip")
+	instancesRunning, err := strconv.ParseBool(terraform.Output(t, terraformOptions, "http_instances_state"))
+	if err != nil {
+		t.Fatalf("Failed to parse bool for http_instances_state: %v", err)
+	}
 	dbInstanceData := terraform.OutputMap(t, terraformOptions, "db_ip")
+	dbInstancesRunning, err := strconv.ParseBool(terraform.Output(t, terraformOptions, "db_instances_state"))
+	if err != nil {
+		t.Fatalf("Failed to parse bool for db_instances_state: %v", err)
+	}
+	dbPublicAccess, err := strconv.ParseBool(terraform.Output(t, terraformOptions, "db_public_access"))
+	if err != nil {
+		t.Fatalf("Failed to parse bool for db_public_access: %v", err)
+	}
 
-	// Tests
+	// Testing:
+	// 1) EC2 instances are correctly created
+	assert.True(t, instancesRunning)
+	assert.True(t, dbInstancesRunning)
+	// 2) CIDR addresses for VPC and subnets
 	for _, instanceIp := range instanceData {
 		assert.Equal(t, "200.100.1", GetFirstThreeOctets(instanceIp))
 	}
 	for _, dbInstanceIp := range dbInstanceData {
 		assert.Equal(t, "200.100.2", GetFirstThreeOctets(dbInstanceIp))
 	}
+	// 3) Testing if DB instance is accessible over internet
+	assert.False(t, dbPublicAccess)
 }
