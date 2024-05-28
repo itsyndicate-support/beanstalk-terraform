@@ -21,6 +21,8 @@ spec:
         region = "us-east-1"
       }
 
+  destroyResourcesOnDeletion: true
+
   runnerPodTemplate:
     spec:
       env:

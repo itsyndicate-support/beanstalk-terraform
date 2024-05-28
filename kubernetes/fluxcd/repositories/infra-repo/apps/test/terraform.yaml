@@ -20,6 +20,9 @@ spec:
         key = "test/terraform.tfstate"
         region = "us-east-1"
       }
+
+  destroyResourcesOnDeletion: true
+
   runnerPodTemplate:
     spec:
       env:
