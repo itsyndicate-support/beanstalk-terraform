@@ -46,9 +46,9 @@ variable "public_key" {
 variable "public_key_name" {
   type    = string
   description = "SSH public key name "
-  default = "test-key"
+  default = "production"
 }
 variable "env" {
   type = string
-  default = "test"
+  default = "production"
 }
