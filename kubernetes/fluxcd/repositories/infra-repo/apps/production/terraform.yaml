@@ -1,0 +1,43 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: prod
+  namespace: flux-system
+spec:
+  vars:
+  - name: environment_name
+    value: production
+  interval: 2m
+  path: ./infrastructure
+  sourceRef:
+    kind: GitRepository
+    name: prod
+  approvePlan: auto
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket = "states-bucket-512"
+        key = "terraform.tfstate"
+        region = "us-east-1"
+      }
+
+  destroyResourcesOnDeletion: true
+
+  runnerPodTemplate:
+    spec:
+      env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_REGION
