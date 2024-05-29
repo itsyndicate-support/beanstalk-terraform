@@ -43,17 +43,17 @@ jobs:
           command: |
             git clone -b dev --single-branch https://github.com/DmytroMigirov/webserver-ec2-module-terraform.git
             cd webserver-ec2-module-terraform
-            if [ -d "kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH" ]; then
+            if [ -d "kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH" ]; then
               echo "Configuration exist"
             else
               git config credential.helper 'cache --timeout=120'
               git config user.email "dmytromigirov@gmail.com"
               git config user.name "DmytroMigirov"
-              mkdir kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH
-              cp -rf kubernetes/fluxcd/repositories/infra-repo/apps/production/* kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH/
-              sed -i "s/stag/$CIRCLE_BRANCH/g" kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH/terraform.yaml
-              sed -i "s/stag/$CIRCLE_BRANCH/g" kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH/gitrepository.yaml
-              git add kubernetes/fluxcd/repositories/infra-repo/clusters/production-cluster/$CIRCLE_BRANCH/*
+              mkdir kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH
+              cp -rf kubernetes/fluxcd/repositories/infra-repo/apps/production/* kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH/
+              sed -i "s/stag/$CIRCLE_BRANCH/g" kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH/terraform.yaml
+              sed -i "s/stag/$CIRCLE_BRANCH/g" kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH/gitrepository.yaml
+              git add kubernetes/fluxcd/repositories/infra-repo/apps/$CIRCLE_BRANCH/*
               git commit -m "[ci skip] Auto-created flux $CIRCLE_BRANCH-enviroment"
               git push -q https://${GITHUB_TOKEN}@github.com/DmytroMigirov/webserver-ec2-module-terraform.git dev
             fi
