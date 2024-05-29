@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Updating Manifest files
           command: |
-            git clone -b dev --single-branch https://github.com/phosphor-v/webserver-ec2-module-terraform.git
+            git clone -b dev --single-branch https://github.com/DmytroMigirov/webserver-ec2-module-terraform.git
             cd webserver-ec2-module-terraform
             if [ -d "kubernetes/fluxcd/repositories/infra-repo/clusters/dev-cluster/$CIRCLE_BRANCH" ]; then
               echo "Configuration exist"
